@@ -8,6 +8,10 @@ import { FooterComponent } from './componentes/footer/footer.component';
 import { HomeComponent } from './componentes/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ListaTurmaComponent } from './componentes/lista-turma/lista-turma.component';
+import { CadastroTurmaComponent } from './componentes/cadastro-turma/cadastro-turma.component';
+import { FormsModule } from '@angular/forms';
+import { ExclusaoTurmaComponent } from './componentes/exclusao-turma/exclusao-turma.component';
+import { EdicaoTurmaComponent } from './componentes/edicao-turma/edicao-turma.component';
 
 @NgModule({
   declarations: [
@@ -15,12 +19,16 @@ import { ListaTurmaComponent } from './componentes/lista-turma/lista-turma.compo
     HeaderComponent,
     FooterComponent,
     HomeComponent,
-    ListaTurmaComponent
+    ListaTurmaComponent,
+    CadastroTurmaComponent,
+    ExclusaoTurmaComponent,
+    EdicaoTurmaComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
