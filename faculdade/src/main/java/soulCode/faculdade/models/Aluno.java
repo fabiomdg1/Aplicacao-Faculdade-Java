@@ -24,17 +24,17 @@ public class Aluno {
 
 	//---------------------------------------------Coluna al_nome-------------------------------------------------------------//
 	//----- A anotação @Column é usada para realizar o mapeamento do campo da entidade com uma coluna do banco de dados. -----//
-	@Column(nullable = false, length = 60)
+	@Column(nullable = false, length = 60)// Campo não pode ser nulo, tamanho máximo de 60 caracteres
 	private String al_nome;
 	
 	//---------------------------------------------Coluna al_responsável------------------------------------------------------//
 	//----- A anotação @Column é usada para realizar o mapeamento do campo da entidade com uma coluna do banco de dados. -----//
-	@Column(nullable = true, length = 60)
+	@Column(nullable = true, length = 60)// Campo não pode ser nulo, tamanho máximo de 60 caracteres
 	private String al_responsavel;
 	
 	//---------------------------------------------Coluna al_cidade-------------------------------------------------------------//
 		//----- A anotação @Column é usada para realizar o mapeamento do campo da entidade com uma coluna do banco de dados. -----//
-	@Column(nullable = false, length = 30)
+	@Column(nullable = false, length = 30)// Campo não pode ser nulo, tamanho máximo de 30 caracteres
 	private String al_cidade;
 
 	//----- Verificar JsonIgnore e ManyToOne-----//

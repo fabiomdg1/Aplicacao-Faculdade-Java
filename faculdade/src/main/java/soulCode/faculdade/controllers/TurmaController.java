@@ -93,8 +93,6 @@ public class TurmaController {
 		turmaService.deletarUmaTurma(id_turma);
 		return ResponseEntity.noContent().build();
 	}
-
-
 	
 }
 

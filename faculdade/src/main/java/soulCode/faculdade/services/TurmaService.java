@@ -2,9 +2,11 @@ package soulCode.faculdade.services;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import soulCode.faculdade.models.Turma;
 import soulCode.faculdade.repositorys.TurmaRepository;
+import soulCode.faculdade.services.exceptions.ObjectNotFoundException;
 
 //----------------------------------------------- Service -------------------------------------------------------//
 //---------- A notação @Service define uma classe como pertencente à camada de Serviço da aplicação. ------------//
@@ -21,12 +23,16 @@ public class TurmaService {
 		return turmaRepository.findAll();
 	}
 	
-	//-------------------------------------- Mostrar uma Turma Específica --------------------------------------//
-	// Optional - economiza código, implementa uma verificação se existe ou não o aluno no banco de dados ------//
-	// Optional - se não encontrar o aluno não vai parar a aplicação -------------------------------------------//
+	//-------------------------------------- Buscar uma Turma Específica --------------------------------------//
+	// Optional - economiza código, implementa uma verificação se existe ou não o aluno no banco de dados -----//
+	// Optional - se não encontrar o aluno não vai parar a aplicação ------------------------------------------//
 	public Turma buscarUmaTurma(Integer id_turma) {
 		Optional<Turma> turma = turmaRepository.findById(id_turma);
-		return turma.orElseThrow();
+
+		//----- Tratamento de erro caso não for encontrado o registro da turma ------------------//
+		//----- Precisamos tratar o erro no Nivel de Serviço e depois no Nível de Controller ----//
+		//----- Retorna turma ou retorna exception que criamos no package service.exception -----//
+		return turma.orElseThrow(()-> new ObjectNotFoundException("Objeto não cadastrado"));
 	}
 	
 	//-------------------------------------------- Criar uma Turma ----------------------------------------------//
@@ -42,7 +48,21 @@ public class TurmaService {
 	}
 	
 	//-------------------------------------------- Deletar uma Turma ---------------------------------------------//
+	//------------ Se houver algum aluno vinculado a esta turma, não é possível deletar --------------------------//
 	public void deletarUmaTurma(Integer id_turma) {
-		//Aqui serão implementadas as classes de exceptions
+		
+		buscarUmaTurma(id_turma);
+		
+		try {
+			turmaRepository.deleteById(id_turma);
+		//----- Pega o tipo de erro DataIntegrityViolationException e instanciamos no e -----//
+		}catch(org.springframework.dao.DataIntegrityViolationException e) {
+
+			//----- No lançamento da exceção,usamos a que criamos -----//
+			throw new soulCode.faculdade.services.exceptions
+			.DataIntegrityViolationException("A turma não pode ser deletada, porque possui alunos relacionados");
+		}
+		
+		
 	}
 }
