@@ -51,6 +51,12 @@ public class AlunoService {
 		buscarUmAluno(aluno.getRa_aluno());
 		return alunoRepository.save(aluno);
 	}
+	
+	//---------------------- Buscar todos alunos de uma turma específica ---------------------------------------//
+	public List<Aluno> buscarAlunoTurma(Integer id_turma){
+		List<Aluno> aluno = alunoRepository.fetchByTurma(id_turma);
+		return aluno;
+	}
 }
 
 

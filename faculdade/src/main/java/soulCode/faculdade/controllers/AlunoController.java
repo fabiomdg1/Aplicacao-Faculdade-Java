@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import soulCode.faculdade.models.Aluno;
+import soulCode.faculdade.models.Turma;
 import soulCode.faculdade.repositorys.AlunoRepository;
 import soulCode.faculdade.services.AlunoService;
 
@@ -92,12 +93,32 @@ public class AlunoController {
 	
 	//----------------------------------------------------- PUT ---------------------------------------------------------------------------//
 	//----- Disponibilizando o método editarAluno através do endereço faculdade/aluno/ra_aluno, aluno por meio da notação @PutMapping -----//
-	//----- A diferença para o RequestMapping é que o @DeleteMapping especifica os tipos de solicitações HTTP. Neste caso o PUT -----------//
-	@PutMapping("/aluno/{ra_aluno}")
-	public ResponseEntity<Void> editarAluno(@PathVariable Integer ra_aluno, @RequestBody Aluno aluno){
+	//----- A diferença para o RequestMapping é que o @PutMapping especifica os tipos de solicitações HTTP. Neste caso o PUT --------------//
+	@PutMapping("aluno/{ra_aluno}")	//
+	public ResponseEntity<Void> editarAluno(@RequestParam(value="turma")Turma turma, @PathVariable Integer ra_aluno, @RequestBody Aluno aluno){		
 		aluno.setRa_aluno(ra_aluno);
+		aluno.setTurma(turma);
 		aluno = alunoService.editarAluno(aluno);
 		return ResponseEntity.noContent().build();
-	}	
+	}
+	
+	
+	
+	//@PutMapping("/aluno/{ra_aluno}")
+	//public ResponseEntity<Void> editarAluno(@PathVariable Integer ra_aluno, @RequestBody Aluno aluno){
+	//	aluno.setRa_aluno(ra_aluno);
+	//	aluno = alunoService.editarAluno(aluno);
+	//	return ResponseEntity.noContent().build();
+	//}
+	
+	
+	//----------------------------------------------------- GET --------------------------------------------------------------------------------//
+	//----- Disponibilizando o método buscarAlunoTurma através do endereço faculdade/aluno/busca-turma, aluno por meio da notação @GetMapping -----//
+	//----- A diferença para o RequestMapping é que o @GetMapping especifica os tipos de solicitações HTTP. Neste caso o GET -------------------//
+	@GetMapping("/aluno/busca-turma/{id_turma}")
+	public List<Aluno> buscarAlunoTurma(@PathVariable Integer id_turma){
+		List<Aluno> aluno = alunoService.buscarAlunoTurma(id_turma);
+		return aluno;
+	}
 	
 }

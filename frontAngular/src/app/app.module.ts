@@ -12,6 +12,9 @@ import { CadastroTurmaComponent } from './componentes/cadastro-turma/cadastro-tu
 import { FormsModule } from '@angular/forms';
 import { ExclusaoTurmaComponent } from './componentes/exclusao-turma/exclusao-turma.component';
 import { EdicaoTurmaComponent } from './componentes/edicao-turma/edicao-turma.component';
+import { ListaAlunoComponent } from './componentes/lista-aluno/lista-aluno.component';
+import { CadastroAlunoComponent } from './componentes/cadastro-aluno/cadastro-aluno.component';
+import { ExclusaoAlunoComponent } from './componentes/exclusao-aluno/exclusao-aluno.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,10 @@ import { EdicaoTurmaComponent } from './componentes/edicao-turma/edicao-turma.co
     ListaTurmaComponent,
     CadastroTurmaComponent,
     ExclusaoTurmaComponent,
-    EdicaoTurmaComponent
+    EdicaoTurmaComponent,
+    ListaAlunoComponent,
+    CadastroAlunoComponent,
+    ExclusaoAlunoComponent
   ],
   imports: [
     BrowserModule,

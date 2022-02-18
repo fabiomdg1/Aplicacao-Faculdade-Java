@@ -1,0 +1,23 @@
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Cadastro novo Aluno</h5>
+    <form>
+      <div class="mb-3">
+        <label class="form-label">Nome do aluno</label>
+        <input type="text" [(ngModel)]="aluno.al_nome"  class="form-control" name="al_nome">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Nome do responsável</label>
+        <input type="text" [(ngModel)]="aluno.al_responsavel" class="form-control" name="al_responsavel">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Cidade do aluno</label>
+        <input type="text"  [(ngModel)]="aluno.al_cidade" class="form-control" name="al_cidade">
+      </div>
+      <button (click)="cadastrarAluno()" class="btn btn-primary ">Cadastrar</button>
+      <button type="reset" class="btn btn-secondary mx-3">Cancelar</button>
+      <button class="btn btn-secondary mx-3">Voltar</button>
+    </form>
+
+  </div>
+</div>

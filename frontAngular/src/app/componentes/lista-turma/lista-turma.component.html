@@ -19,7 +19,7 @@
           <th scope="row">{{turma.id_turma}}</th>
           <td>{{turma.tu_nome}}</td>
           <td>{{turma.tu_descricao}}</td>
-          <td><i class="fa-solid fa-user"  ></i></td>
+          <td><i routerLink="/alunoTurma/{{turma.id_turma}}" class="fa-solid fa-user"  ></i></td>
           <td><i routerLink="/edicaoTurma/{{turma.id_turma}}" class="fas fa-edit text-info" ></i>
           <i routerLink="/exclusaoTurma/{{turma.id_turma}}" class="fas fa-trash-alt text-danger mx-2" ></i>
           </td>
