@@ -15,12 +15,12 @@ export class ListaTurmaComponent implements OnInit {
   constructor(private turmaService: TurmaService) { }
 
   ngOnInit(): void {
-    this.mostrarTodasTurmas();
+    this.mostrarTodasTurmas()
   }
 
   mostrarTodasTurmas(){
     this.turmaService.mostrarTodasTurmas().subscribe(resposta =>{
-      this.turmas = resposta;
+      this.turmas = resposta
     })
   }
 
