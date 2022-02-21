@@ -15,6 +15,7 @@ import { EdicaoTurmaComponent } from './componentes/edicao-turma/edicao-turma.co
 import { ListaAlunoComponent } from './componentes/lista-aluno/lista-aluno.component';
 import { CadastroAlunoComponent } from './componentes/cadastro-aluno/cadastro-aluno.component';
 import { ExclusaoAlunoComponent } from './componentes/exclusao-aluno/exclusao-aluno.component';
+import { EdicaoAlunoComponent } from './componentes/edicao-aluno/edicao-aluno.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ExclusaoAlunoComponent } from './componentes/exclusao-aluno/exclusao-al
     EdicaoTurmaComponent,
     ListaAlunoComponent,
     CadastroAlunoComponent,
-    ExclusaoAlunoComponent
+    ExclusaoAlunoComponent,
+    EdicaoAlunoComponent
   ],
   imports: [
     BrowserModule,

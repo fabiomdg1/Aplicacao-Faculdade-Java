@@ -32,4 +32,9 @@ export class AlunoService {
     return this.http.delete<Aluno>(url)
   }
 
+  editarAluno(aluno:Aluno, ra_aluno:String, id_turma:String):Observable<Aluno>{
+    const url = `${this.baseUrl}/aluno/${aluno.ra_aluno}?turma=${id_turma}`
+    return this.http.put<Aluno>(url,aluno)
+  }
+
 }
