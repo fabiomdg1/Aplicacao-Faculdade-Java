@@ -63,12 +63,20 @@ public class AlunoController {
 		return ResponseEntity.ok().body(aluno);
 	}
 	
+	//----------------------------------------------------- GET --------------------------------------------------------------------------------//
+		//----- Disponibilizando o método buscarAlunoTurma através do endereço faculdade/aluno/busca-turma, aluno por meio da notação @GetMapping -----//
+		//----- A diferença para o RequestMapping é que o @GetMapping especifica os tipos de solicitações HTTP. Neste caso o GET -------------------//
+		@GetMapping("/aluno/busca-turma/{id_turma}")
+		public List<Aluno> buscarAlunoTurma(@PathVariable Integer id_turma){
+			List<Aluno> aluno = alunoService.buscarAlunoTurma(id_turma);
+			return aluno;
+		}
+	
 	//--------------------------------------------------- POST --------------------------------------------------------------------//
 	//----- Disponibilizando o método inserirAluno através do endereço faculdade/aluno por meio da notação @PostMapping -----------//
 	//----- A diferença para o RequestMapping é que o @PostMapping especifica os tipos de solicitações HTTP. Neste caso o POST ----//
 	@PostMapping("/aluno")
-	public ResponseEntity<Aluno> InserirAluno(@RequestParam(value="turma")Integer id_turma,
-			@RequestBody Aluno aluno){	
+	public ResponseEntity<Aluno> InserirAluno(@RequestParam(value="turma")Integer id_turma,	@RequestBody Aluno aluno){	
 		aluno = alunoService.InserirAluno(id_turma, aluno);
 		
 		
@@ -112,13 +120,8 @@ public class AlunoController {
 	//}
 	
 	
-	//----------------------------------------------------- GET --------------------------------------------------------------------------------//
-	//----- Disponibilizando o método buscarAlunoTurma através do endereço faculdade/aluno/busca-turma, aluno por meio da notação @GetMapping -----//
-	//----- A diferença para o RequestMapping é que o @GetMapping especifica os tipos de solicitações HTTP. Neste caso o GET -------------------//
-	@GetMapping("/aluno/busca-turma/{id_turma}")
-	public List<Aluno> buscarAlunoTurma(@PathVariable Integer id_turma){
-		List<Aluno> aluno = alunoService.buscarAlunoTurma(id_turma);
-		return aluno;
-	}
+	
+	
+	
 	
 }

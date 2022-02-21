@@ -57,6 +57,7 @@ public class AlunoService {
 		List<Aluno> aluno = alunoRepository.fetchByTurma(id_turma);
 		return aluno;
 	}
+	
 }
 
 
