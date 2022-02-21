@@ -16,4 +16,6 @@ public interface AlunoRepository extends JpaRepository<Aluno,Integer>{
 	@Query(value = "select * from aluno where id_turma = :id_turma", nativeQuery = true)
 	List <Aluno> fetchByTurma(Integer id_turma);
 	
+	@Query(value="select ra_aluno, al_nome, al_cidade, tu_nome, tu_descricao from turma right join aluno on aluno.id_turma = turma.id_turma order by al_nome", nativeQuery = true)
+	List<List> alunosComTurma();
 }

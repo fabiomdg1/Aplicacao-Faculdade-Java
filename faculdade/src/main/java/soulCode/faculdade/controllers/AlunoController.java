@@ -49,9 +49,17 @@ public class AlunoController {
 	//----- Disponibilizando o método mostrarTodosAlunos através do endereço faculdade/alunos por meio da notação @GetMapping -----//
 	//----- A diferença para o RequestMapping é que o @GetMapping especifica os tipos de solicitações HTTP. Neste caso o GET ------//
 	@GetMapping("/aluno")
-	private List<Aluno> mostrarTodosAlunos() {
+	public List<Aluno> mostrarTodosAlunos() {
 		List<Aluno> aluno = alunoService.mostrarTodosAlunos();
 		return aluno;
+	}
+	
+	
+	
+	@GetMapping("/aluno-turma")
+	public List<List> alunosComTurma(){
+		List<List> alunoTurma = alunoService.alunosComTurma();
+		return alunoTurma;
 	}
 	
 	//--------------------------------------------------- GET ---------------------------------------------------------------------//

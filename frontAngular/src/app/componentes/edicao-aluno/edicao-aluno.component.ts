@@ -10,7 +10,7 @@ import { Aluno } from 'src/app/alunoModel';
 })
 export class EdicaoAlunoComponent implements OnInit {
 
-  id_turma: String =''
+  id_turma: any =''
 
   aluno:Aluno={
     ra_aluno:'',
@@ -42,6 +42,19 @@ export class EdicaoAlunoComponent implements OnInit {
         error:()=>{alert("Erro ao editar aluno")
         this.router.navigate([`alunoTurma/${this.id_turma}`])}
       })
+    }
+
+    trocarTurma(){
+      this.id_turma = prompt("Para qual turma deseja transferir o aluno ?", "id_turma")
+      this.alunoService.editarAluno(this.aluno,this.aluno.ra_aluno,this.id_turma).subscribe({
+        complete:()=>{alert("Aluno transferido com sucesso")
+        this.router.navigate([`alunoTurma/${this.id_turma}`])},
+
+        error:()=>{alert("Erro ao transferir aluno")
+        //this.router.navigate([`alunoTurma/${this.id_turma}`])
+      }
+      })
+
     }
 
 

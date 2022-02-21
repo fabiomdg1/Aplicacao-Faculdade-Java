@@ -12,6 +12,12 @@ export class AlunoService {
 
   constructor(private http:HttpClient) { }
 
+  buscarTodosAlunos():Observable<Aluno[]>{
+    const url = `${this.baseUrl}/aluno`
+    return this.http.get<Aluno[]>(url)
+  }
+
+
   buscarAlunoTurma(id_turma:string):Observable<Aluno[]>{
     const url = `${this.baseUrl}/aluno/busca-turma/${id_turma}`
     return this.http.get<Aluno[]>(url);

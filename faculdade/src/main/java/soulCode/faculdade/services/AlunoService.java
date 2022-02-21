@@ -33,6 +33,11 @@ public class AlunoService {
 		return aluno.orElseThrow();
 	}
 	
+	//-------------------------------------- Buscar Todos Alunos Com Turma --------------------------------------//
+	public List<List> alunosComTurma(){
+		return alunoRepository.alunosComTurma();		
+	}
+	
 	//-------------------------------------- Inserir Aluno ------------------------------------------------------//
 	public Aluno InserirAluno(Integer id_turma, Aluno aluno) {
 		aluno.setRa_aluno(null);
