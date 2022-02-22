@@ -13,8 +13,6 @@ export class ListaGeralAlunoComponent implements OnInit {
   alunos:Aluno[] = []
 
 
-
-
   constructor(private alunoService:AlunoService,
               private router:Router) { }
 
@@ -25,7 +23,8 @@ export class ListaGeralAlunoComponent implements OnInit {
   mostrarTodosAlunos(){
     this.alunoService.buscarTodosAlunos().subscribe(resultado=>{
       this.alunos = resultado
-    })
+      console.log(this.alunos)
+      })
   }
 
 }

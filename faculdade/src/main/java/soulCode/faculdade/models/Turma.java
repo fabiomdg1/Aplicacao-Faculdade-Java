@@ -6,7 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 //---------------------- A anotação @Entity é utilizada para informar que uma classe também é uma entidade. ------------//
 //---------------------- Uma entidade representa, na Orientação a Objetos, uma tabela do banco de dados-----------------//
@@ -38,11 +40,23 @@ public class Turma {
 	@OneToMany(mappedBy = "turma")
 	private List<Aluno> aluno = new ArrayList<>();
 
+	@OneToOne
+	@JoinColumn(name = "id_professor", unique = true)
+	private Turma turma;
 	
-	//----- Getters and Setters -----//
+	
+	 //----- Getters and Setters -----//
 	
 	public Integer getId_turma() {
 		return id_turma;
+	}
+
+	public Turma getTurma() {
+		return turma;
+	}
+
+	public void setTurma(Turma turma) {
+		this.turma = turma;
 	}
 
 	public void setId_turma(Integer id_turma) {
