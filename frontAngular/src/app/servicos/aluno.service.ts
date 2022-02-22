@@ -1,3 +1,4 @@
+import { url } from 'inspector';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -14,6 +15,11 @@ export class AlunoService {
 
   buscarTodosAlunos():Observable<Aluno[]>{
     const url = `${this.baseUrl}/aluno`
+    return this.http.get<Aluno[]>(url)
+  }
+
+  bta():Observable<Aluno[]>{
+    const url = `${this.baseUrl}/aluno/aluno-turma`
     return this.http.get<Aluno[]>(url)
   }
 

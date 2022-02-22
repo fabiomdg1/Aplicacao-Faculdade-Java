@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import soulCode.faculdade.models.Aluno;
 import soulCode.faculdade.models.Turma;
-import soulCode.faculdade.repositorys.AlunoRepository;
 import soulCode.faculdade.services.AlunoService;
 
 //-------------------------------------A notação CrossOrigin evita o problema de Cors--------------------------//
@@ -54,8 +53,8 @@ public class AlunoController {
 		return aluno;
 	}
 	
-	
-	
+
+	//--------------------------------------------------- GET ---------------------------------------------------------------------//
 	@GetMapping("/aluno-turma")
 	public List<List> alunosComTurma(){
 		List<List> alunoTurma = alunoService.alunosComTurma();

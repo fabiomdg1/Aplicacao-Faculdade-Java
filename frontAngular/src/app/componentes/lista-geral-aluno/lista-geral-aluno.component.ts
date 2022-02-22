@@ -12,6 +12,9 @@ export class ListaGeralAlunoComponent implements OnInit {
 
   alunos:Aluno[] = []
 
+
+
+
   constructor(private alunoService:AlunoService,
               private router:Router) { }
 
