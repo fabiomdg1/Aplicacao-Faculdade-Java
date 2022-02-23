@@ -27,7 +27,7 @@ public class Professor {
 	
 	@OneToOne
 	@JoinColumn(name = "id_turma", unique = true)	
-	@JsonIgnore
+	
 	private Turma turma;
 
 	
