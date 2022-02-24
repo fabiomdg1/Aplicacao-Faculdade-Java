@@ -30,6 +30,7 @@ public class ProfessorController {
 	
 	@Autowired
 	private TurmaService turmaService;
+
 	
 	@GetMapping("/professor")
 	public List<Professor> mostrarTodosProfessores(){
@@ -44,6 +45,12 @@ public class ProfessorController {
 		return ResponseEntity.ok().body(professor);
 	}
 	
+	@GetMapping("/professor-turma/{id_turma}")
+	public ResponseEntity<Professor>buscarProfessorDaTurma(@PathVariable Integer id_turma){
+		Professor professor = professorService.buscarProfessorDaTurma(id_turma);
+		return ResponseEntity.ok().body(professor);
+	}
+	
 	@PostMapping("/professorSemTurma")
 	public ResponseEntity<Professor> InserirProfessorSemTurma(@RequestBody Professor professor){
 		professor = professorService.InserirProfessorSemTurma(professor);
@@ -53,6 +60,19 @@ public class ProfessorController {
 		return ResponseEntity.created(uri).build();
 		
 	}
+	
+	
+	@PostMapping("/professor")
+	public ResponseEntity<Professor> inserirProfessor(@RequestParam(value="turma", required=false)
+	Integer id_turma, @RequestBody Professor professor){
+		professor = professorService.InserirProfessorComTurma(id_turma, professor);
+		
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(professor.getId_professor()).toUri();
+		return ResponseEntity.created(uri).build();
+	}
+	
+	
 	
 	@PostMapping("/professorComTurma")
 	public ResponseEntity<Professor> InserirProfessorComTurma(@RequestParam(value="turma")Integer id_turma, @RequestBody Professor professor){
@@ -64,10 +84,11 @@ public class ProfessorController {
 	
 	
 	@PutMapping("/professor/{id_professor}")
-	public ResponseEntity<Professor> editarProfessor(@RequestParam(value="turma", required=false)Turma turma, @PathVariable Integer id_professor, @RequestBody Professor professor){
+	public ResponseEntity<Professor> editarProfessor(@RequestParam(value="turma", required=false)Integer id_turma, @PathVariable Integer id_professor, @RequestBody Professor professor){
 		professor.setId_professor(id_professor);
-		professor.setTurma(turma);
-		professor = professorService.editarProfessor(professor);
+		
+		
+		professor = professorService.editarProfessor(id_turma, professor);
 		return ResponseEntity.noContent().build();		
 	}
 	

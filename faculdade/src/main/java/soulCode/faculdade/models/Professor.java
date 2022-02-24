@@ -23,11 +23,8 @@ public class Professor {
 	@Column(nullable = true, length=40)
 	private String pro_formacao;
 	
-	//Ignora os dados da turma para não ocorrer loop
-	
 	@OneToOne
 	@JoinColumn(name = "id_turma", unique = true)	
-	
 	private Turma turma;
 
 	
@@ -64,3 +61,4 @@ public class Professor {
 		this.turma = turma;
 	}
 }
+

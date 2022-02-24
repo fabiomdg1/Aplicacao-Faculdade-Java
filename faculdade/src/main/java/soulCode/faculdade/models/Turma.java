@@ -41,8 +41,9 @@ public class Turma {
 	private List<Aluno> aluno = new ArrayList<>();
 
 	@OneToOne
-	@JoinColumn(name = "id_professor", unique = true)
-	private Turma turma;
+	@JoinColumn(name = "id_professor", unique = true)	
+	private Professor professor;
+	//private Turma turma;
 	
 	
 	 //----- Getters and Setters -----//
@@ -51,13 +52,9 @@ public class Turma {
 		return id_turma;
 	}
 
-	public Turma getTurma() {
-		return turma;
-	}
+	
 
-	public void setTurma(Turma turma) {
-		this.turma = turma;
-	}
+	
 
 	public void setId_turma(Integer id_turma) {
 		this.id_turma = id_turma;
@@ -85,8 +82,14 @@ public class Turma {
 
 	public void setAluno(List<Aluno> aluno) {
 		this.aluno = aluno;
-	}	
-	
-	
+	}
+
+	public Professor getProfessor() {
+		return professor;
+	}
+
+	public void setProfessor(Professor professor) {
+		this.professor = professor;
+	}		
 	
 }
