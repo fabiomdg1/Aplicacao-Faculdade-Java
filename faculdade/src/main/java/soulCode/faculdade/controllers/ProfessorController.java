@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import soulCode.faculdade.models.Professor;
-import soulCode.faculdade.models.Turma;
 import soulCode.faculdade.services.ProfessorService;
 import soulCode.faculdade.services.TurmaService;
 
@@ -90,6 +89,12 @@ public class ProfessorController {
 		
 		professor = professorService.editarProfessor(id_turma, professor);
 		return ResponseEntity.noContent().build();		
+	}
+	
+	@GetMapping("/professorSemTurma")
+	public List<Professor> professorSemTurma(){
+		List<Professor> professor = professorService.professorSemTurma() ;
+		return professor;
 	}
 	
 }

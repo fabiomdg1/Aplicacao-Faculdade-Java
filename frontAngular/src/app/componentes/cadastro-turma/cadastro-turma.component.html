@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card container">
   <div class="card-body">
     <h5 class="card-title">Cadastro de nova Turma</h5>
     <form>
@@ -10,10 +10,11 @@
         <label class="form-label">Nome da turma</label>
         <input type="text" class="form-control"  [(ngModel)]="turma.tu_nome" name="tu_nome">
       </div>
-      <button (click)="cadastrarTurma()" class="btn btn-primary ">Cadastrar</button>
-      <button type="reset" class="btn btn-secondary mx-3">Cancelar</button>
-      <button routerLink="/turma" class="btn btn-secondary mx-3">Voltar</button>
+      <button (click)="cadastrarTurma()" class="btn btn-sm btn-secondary ">Cadastrar</button>
+      <button type="reset" class="btn btn-sm btn-danger mx-3">Limpar</button>
+      <button routerLink="/turma" class="btn btn-sm btn-warning mx-3">Voltar</button>
     </form>
 
   </div>
 </div>
+

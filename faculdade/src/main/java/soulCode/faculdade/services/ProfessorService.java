@@ -76,6 +76,11 @@ public class ProfessorService {
 		Professor professor = professorRepository.buscaProfessorDaTurma(id_turma);
 		return professor;
 	}
+	
+	public List<Professor> professorSemTurma(){
+		return professorRepository.professorSemTurma();
+	}
+	
 }
 
 

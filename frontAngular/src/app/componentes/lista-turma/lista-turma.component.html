@@ -1,7 +1,7 @@
-<div class="card">
+<div class="card container">
   <div class="card-body">
     <h5 class="card-title">Turmas</h5>
-    <button routerLink="/cadastroTurma" class="btn btn-danger">Cadastrar</button>
+    <button routerLink="/cadastroTurma" class="btn btn-sm btn-secondary">Cadastrar</button>
 
     <!---------------------------- Barra de Rolagem ----------------------------->
     <div style="height: 300px; overflow: auto;">    <table class="table">
@@ -11,6 +11,8 @@
           <th scope="col">Código</th>
           <th scope="col">Nome da Turma</th>
           <th scope="col">Descrição</th>
+          <th scope="col">Alunos</th>
+          <th scope="col">Professores</th>
           <th scope="col">Ações</th>
         </tr>
       </thead>
@@ -20,6 +22,7 @@
           <td>{{turma.tu_nome}}</td>
           <td>{{turma.tu_descricao}}</td>
           <td><i routerLink="/alunoTurma/{{turma.id_turma}}" class="fa-solid fa-user"  ></i></td>
+          <td><i routerLink="/professorDaTurma/{{turma.id_turma}}" class="fa-solid fa-chalkboard-user"></i></td>
           <td><i routerLink="/edicaoTurma/{{turma.id_turma}}" class="fas fa-edit text-info" ></i>
           <i routerLink="/exclusaoTurma/{{turma.id_turma}}" class="fas fa-trash-alt text-danger mx-2" ></i>
           </td>

@@ -22,13 +22,15 @@ public class Professor {
 	
 	@Column(nullable = true, length=40)
 	private String pro_formacao;
-	
+			
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name = "id_turma", unique = true)	
 	private Turma turma;
 
 	
-	//----- Getters and Setters -----//
+	//----- Getters and Setters -----//	
+		
 	public Integer getId_professor() {
 		return id_professor;
 	}
