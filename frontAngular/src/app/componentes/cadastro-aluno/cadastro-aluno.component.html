@@ -14,6 +14,13 @@
         <label class="form-label">Cidade do aluno</label>
         <input type="text"  [(ngModel)]="aluno.al_cidade" class="form-control" name="al_cidade">
       </div>
+
+      <div class="mb-3">
+        <label class="form-label">Idade do aluno</label>
+        <input type="text"  [(ngModel)]="aluno.al_idade" class="form-control" name="al_idade">
+      </div>
+
+
       <button (click)="cadastrarAluno()" class="btn btn-sm btn-secondary ">Cadastrar</button>
       <button type="reset" class="btn btn-sm btn-danger mx-3">Limpar</button>
       <button class="btn btn-sm btn-warning mx-3">Voltar</button>

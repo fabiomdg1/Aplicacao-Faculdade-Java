@@ -42,8 +42,20 @@ public class Aluno {
 	@ManyToOne
 	@JoinColumn(name = "id_turma")
 	private Turma turma;
+	
+	//nullabel = true ==> pode ser nulo
+	@Column (nullable=true, length = 60)
+	private String al_idade;
 
 	//----- Getters and Setters -----//
+
+	public String getAl_idade() {
+		return al_idade;
+	}
+
+	public void setAl_idade(String al_idade) {
+		this.al_idade = al_idade;
+	}
 
 	public Integer getRa_aluno() {
 		return ra_aluno;

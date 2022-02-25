@@ -1,3 +1,4 @@
+import { ListaProfessorComponent } from './componentes/lista-professor/lista-professor.component';
 import { ProfessorDaTurmaComponent } from './componentes/professor-da-turma/professor-da-turma.component';
 import { ListaGeralAlunoComponent } from './componentes/lista-geral-aluno/lista-geral-aluno.component';
 import { EdicaoAlunoComponent } from './componentes/edicao-aluno/edicao-aluno.component';
@@ -24,7 +25,8 @@ const routes: Routes = [
   {path: "alunoExclusao/:ra_aluno/:id_turma", component:ExclusaoAlunoComponent},
   {path: "alunoEdicao/:ra_aluno/:id_turma", component:EdicaoAlunoComponent},
   {path: "listaGeralAlunos", component: ListaGeralAlunoComponent},
-  {path: "professorDaTurma/:id_turma", component: ProfessorDaTurmaComponent}
+  {path: "professorDaTurma/:id_turma", component: ProfessorDaTurmaComponent},
+  {path: "professor/listaProfessor", component: ListaProfessorComponent}
 ];
 
 @NgModule({

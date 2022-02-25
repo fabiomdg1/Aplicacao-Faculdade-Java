@@ -22,7 +22,12 @@ public class Professor {
 	
 	@Column(nullable = true, length=40)
 	private String pro_formacao;
+	
+	@Column(nullable = true, length=20)
+	private String pro_idade;
 			
+	
+
 	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name = "id_turma", unique = true)	
@@ -30,6 +35,14 @@ public class Professor {
 
 	
 	//----- Getters and Setters -----//	
+	
+	public String getPro_idade() {
+		return pro_idade;
+	}
+
+	public void setPro_idade(String pro_idade) {
+		this.pro_idade = pro_idade;
+	}
 		
 	public Integer getId_professor() {
 		return id_professor;

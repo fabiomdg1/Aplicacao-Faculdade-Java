@@ -2,8 +2,11 @@ package soulCode.faculdade.services;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+
+import soulCode.faculdade.models.Professor;
 import soulCode.faculdade.models.Turma;
 import soulCode.faculdade.repositorys.TurmaRepository;
 import soulCode.faculdade.services.exceptions.ObjectNotFoundException;
@@ -17,6 +20,10 @@ public class TurmaService {
 	//------- Utilizando a injeção de dependência de JpaRepository por meio da Interface TurmaRepository -------//
 	@Autowired
 	private TurmaRepository turmaRepository;
+	
+	@Lazy
+	@Autowired
+	private ProfessorService professorService;
 	
 	//-------------------------------------- Mostrar todas as Turmas -------------------------------------------//
 	public List<Turma> mostrarTodasTurmas(){
@@ -65,4 +72,12 @@ public class TurmaService {
 		
 		
 	}
+	
+	  public Turma atribuirProfessor(Integer id_turma, Integer id_professor){
+		  Turma turma = buscarUmaTurma(id_turma);
+		  Professor professor = professorService.mostrarUmProfessor(id_professor);
+		  turma.setProfessor(professor);
+		  professor.setTurma(turma);
+		  return turmaRepository.save(turma);
+	  }
 }

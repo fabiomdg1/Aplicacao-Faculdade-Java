@@ -3,4 +3,5 @@ export interface Aluno{
   al_nome:string;
   al_responsavel:string;
   al_cidade:string;
+  al_idade:string;
 }

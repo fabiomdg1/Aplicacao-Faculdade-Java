@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import soulCode.faculdade.models.Turma;
 import soulCode.faculdade.services.TurmaService;
+import soulCode.faculdade.models.Professor;
 
 //-------------------------------------A notação CrossOrigin evita o problema de Cors--------------------------//
 @CrossOrigin
@@ -91,6 +92,12 @@ public class TurmaController {
 	@DeleteMapping("/turma/{id_turma}")
 	public ResponseEntity<Void> deletarUmaTurma(@PathVariable Integer id_turma){
 		turmaService.deletarUmaTurma(id_turma);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@PutMapping("/turma/definirProfessor/{id_turma}/{id_professor}")
+	public ResponseEntity<Professor> atribuirProfessor(@PathVariable Integer id_turma, @PathVariable Integer id_professor){
+		Turma turma = turmaService.atribuirProfessor(id_turma, id_professor);
 		return ResponseEntity.noContent().build();
 	}
 	

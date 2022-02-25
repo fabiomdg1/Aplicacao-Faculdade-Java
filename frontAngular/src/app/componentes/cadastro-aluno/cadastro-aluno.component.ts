@@ -15,7 +15,8 @@ export class CadastroAlunoComponent implements OnInit {
     ra_aluno:'',
     al_nome:'',
     al_responsavel:'',
-    al_cidade:''
+    al_cidade:'',
+    al_idade:''
   }
 
   constructor(private alunoService:AlunoService,

@@ -52,4 +52,10 @@ export class TurmaService {
     const url = `${this.baseUrl}/turma/${turma.id_turma}`
     return this.http.put<void>(url,turma)
   }
+
+  atribuirProfessor(turma:Turma, id_turma:String, id_professor:String):Observable<void>{
+    const url = `${this.baseUrl}/turma/definirProfessor/${id_turma}/${id_professor}`
+    return this.http.put<void>(url,turma)
+  }
+
 }

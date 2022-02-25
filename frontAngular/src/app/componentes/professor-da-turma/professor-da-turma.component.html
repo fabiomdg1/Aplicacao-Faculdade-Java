@@ -13,13 +13,17 @@
 
 
       <div *ngIf="!professorCadastrado">
-        <select class="form-select" [(ngModel)]="id_professorSemTurma" name="id_professorSemTurma" (ngModelChange)="mostrarProfessor()">
-          <option *ngFor="let professor of professoresSemTurma" [ngValue]="professor.id_professor">
-            {{professor.pro_nome}}
-          </option>
 
-        </select>
-        <button class="btn btn-primary">Definir professor pra essa Turma</button>
+        <div class="card">
+          <div class="card-body">
+            <select class="form-select" [(ngModel)]="professorSemTurma" name="professorSemTurma" (ngModelChange)="mostrarProfessor()">
+              <option *ngFor="let professor of professoresSemTurma" [ngValue]="professor">
+                {{professor.pro_nome}}
+              </option>
+            </select>
+            <button class="btn btn-sm btn-primary">Salvar</button>
+          </div>
+        </div>
       </div>
       <button routerLink="/turma" class="btn btn-sm btn-warning mx-3">Alterar Professor</button>
       <button routerLink="/turma" class="btn btn-sm btn-secondary mx-3">Cancelar</button>

@@ -23,7 +23,8 @@ export class ProfessorService {
 	    return this.http.get<Professor[]>(url)
 	}
 
-  mostrarProfessor(){
-
+  mostrarTodosProfessores():Observable<Professor[]>{
+    const url = `${this.baseUrl}/professor`
+    return this.http.get<Professor[]>(url)
   }
 }
