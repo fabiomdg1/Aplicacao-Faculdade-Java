@@ -39,45 +39,70 @@ public class TurmaService {
 		//----- Tratamento de erro caso não for encontrado o registro da turma ------------------//
 		//----- Precisamos tratar o erro no Nivel de Serviço e depois no Nível de Controller ----//
 		//----- Retorna turma ou retorna exception que criamos no package service.exception -----//
-		return turma.orElseThrow(()-> new ObjectNotFoundException("Objeto não cadastrado"));
+		return turma.orElseThrow(() -> new soulCode.faculdade.services.exceptions.ObjectNotFoundException(
+				"Objeto não cadastrado! O id procurado foi: " + id_turma));
 	}
 	
-	//-------------------------------------------- Criar uma Turma ----------------------------------------------//
-	public Turma create(Turma turma) {
+	
+	public List<Turma> turmaSemProfessor(){
+		return turmaRepository.turmaSemProfessor();
+	}
+	
+	public Turma turmaDoProfessor(Integer id_professor) {
+		Turma turma = turmaRepository.turmaDoProfessor(id_professor);
+		return turma;
+	}
+	
+	
+	public List<List> turmaComSeuProfessor(){
+		return turmaRepository.turmaComSeuProfessor();
+	}
+	public Turma cadastrarTurma(Integer id_professor, Turma turma) {
+		// é uma forma de segurança para não setarmos o id
 		turma.setId_turma(null);
+		if (id_professor != null) {
+			Professor professor = professorService.mostrarUmProfessor(id_professor);
+			turma.setProfessor(professor);
+			
+		}
+		
 		return turmaRepository.save(turma);
 	}
-	
-	//-------------------------------------------- Editar uma Turma ----------------------------------------------//
+
 	public Turma editarTurma(Turma turma) {
 		buscarUmaTurma(turma.getId_turma());
 		return turmaRepository.save(turma);
 	}
-	
-	//-------------------------------------------- Deletar uma Turma ---------------------------------------------//
-	//------------ Se houver algum aluno vinculado a esta turma, não é possível deletar --------------------------//
+
 	public void deletarUmaTurma(Integer id_turma) {
-		
 		buscarUmaTurma(id_turma);
-		
 		try {
 			turmaRepository.deleteById(id_turma);
-		//----- Pega o tipo de erro DataIntegrityViolationException e instanciamos no e -----//
 		}catch(org.springframework.dao.DataIntegrityViolationException e) {
-
-			//----- No lançamento da exceção,usamos a que criamos -----//
-			throw new soulCode.faculdade.services.exceptions
-			.DataIntegrityViolationException("A turma não pode ser deletada, porque possui alunos relacionados");
+			throw new soulCode.faculdade.services.exceptions.DataIntegrityViolationException(
+					"A turma não pode ser deletada! Possui alunos relacionados!");
 		}
 		
-		
+	}
+
+	public Turma atribuirProfessor(Integer id_turma,Integer id_professor){
+		Turma turma = buscarUmaTurma(id_turma);
+		Professor professorAnterior = professorService.buscarProfessorDaTurma(id_turma);
+		Professor professor = professorService.mostrarUmProfessor(id_professor);
+		if(turma.getProfessor()!=null) {
+			turma.setProfessor(null);
+			professorAnterior.setTurma(null);
+		}
+		turma.setProfessor(professor);
+		professor.setTurma(turma);
+		return turmaRepository.save(turma);
 	}
 	
-	  public Turma atribuirProfessor(Integer id_turma, Integer id_professor){
-		  Turma turma = buscarUmaTurma(id_turma);
-		  Professor professor = professorService.mostrarUmProfessor(id_professor);
-		  turma.setProfessor(professor);
-		  professor.setTurma(turma);
-		  return turmaRepository.save(turma);
-	  }
+	public Turma deixarTurmaSemProfessor(Integer id_turma, Integer id_professor) {
+		Turma turma = buscarUmaTurma(id_turma);
+		turma.setProfessor(null);
+		Professor professor = professorService.mostrarUmProfessor(id_professor);
+		professor.setTurma(null);
+		return turmaRepository.save(turma);
+	}
 }

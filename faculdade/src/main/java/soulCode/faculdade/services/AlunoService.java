@@ -25,31 +25,47 @@ public class AlunoService {
 		return alunoRepository.findAll();
 	}
 	
-	//-------------------------------------- Buscar um Aluno ---------------------------------------------------//
-	// Optional - economiza código, implementa uma verificação se existe ou não o aluno no banco de dados ------//
-	// Optional - se não encontrar o aluno não vai parar a aplicação -------------------------------------------//
-	public Aluno buscarUmAluno(Integer ra_aluno) {
-		// O ra_aluno foi definido como primary key na classe Aluno
-		Optional<Aluno> aluno = alunoRepository.findById(ra_aluno);
-		return aluno.orElseThrow();
-	}
-	
 	//-------------------------------------- Buscar Todos Alunos Com Turma --------------------------------------//
 	public List<List> alunosComTurma(){
 		return alunoRepository.alunosComTurma();		
 	}
 	
-	//-------------------------------------- Inserir Aluno ------------------------------------------------------//
-	public Aluno InserirAluno(Integer id_turma, Aluno aluno) {
-		aluno.setRa_aluno(null);
-		Turma turma = turmaService.buscarUmaTurma(id_turma);
+	//-------------------------------------- Buscar um Aluno ---------------------------------------------------//
+	// Optional - economiza código, implementa uma verificação se existe ou não o aluno no banco de dados ------//
+	// Optional - se não encontrar o aluno não vai parar a aplicação -------------------------------------------//
+	public Aluno buscarUmAluno(Integer ra_aluno) {
+		Optional<Aluno> aluno = alunoRepository.findById(ra_aluno);
+		return aluno.orElseThrow();
+	}
+	
+	//---------------------- Buscar todos alunos de uma turma específica ---------------------------------------//
+	public List<Aluno> buscarAlunoTurma(Integer id_turma){
+		List<Aluno> aluno = alunoRepository.fetchByTurma(id_turma);
+		return aluno;
+	}
+
+	
+	public Aluno inserirAlunoNaTurma(Integer ra_aluno, Turma turma) {
+		Aluno aluno = buscarUmAluno(ra_aluno);
 		aluno.setTurma(turma);
+		return alunoRepository.save(aluno);
+	}
+	
+	public Aluno deixarAlunoSemTurma(Integer ra_aluno) {
+		Aluno aluno = buscarUmAluno(ra_aluno);
+		aluno.setTurma(null);
+		return alunoRepository.save(aluno);
+	}
+	
+	//-------------------------------------- Inserir Aluno ------------------------------------------------------//
+	public Aluno InserirAluno(Aluno aluno) {
+		aluno.setRa_aluno(null);
 		return alunoRepository.save(aluno);
 	}
 	
 	//-------------------------------------- Deletar Aluno ------------------------------------------------------//
 	public void deletarUmAluno(Integer ra_aluno) {
-		alunoRepository.deleteById(ra_aluno);		
+		alunoRepository.deleteById(ra_aluno);
 	}
 	
 	//-------------------------------------- Editar Aluno ------------------------------------------------------//
@@ -58,10 +74,7 @@ public class AlunoService {
 		return alunoRepository.save(aluno);
 	}
 	
-	//---------------------- Buscar todos alunos de uma turma específica ---------------------------------------//
-	public List<Aluno> buscarAlunoTurma(Integer id_turma){
-		List<Aluno> aluno = alunoRepository.fetchByTurma(id_turma);
-		return aluno;
-	}
+	
+	
 	
 }

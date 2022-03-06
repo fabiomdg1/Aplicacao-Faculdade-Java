@@ -1,15 +1,11 @@
 package soulCode.faculdade.services;
-
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import soulCode.faculdade.models.Professor;
 import soulCode.faculdade.models.Turma;
 import soulCode.faculdade.repositorys.ProfessorRepository;
-import soulCode.faculdade.repositorys.TurmaRepository;
 
 @Service
 public class ProfessorService {
@@ -19,46 +15,31 @@ public class ProfessorService {
 	@Autowired
 	private TurmaService turmaService;
 	
-	@Autowired
-	private TurmaRepository turmaRepository;
-	
 	public List<Professor> mostrarTodosProfessores(){
-		return professorRepository.findAll();
+		return professorRepository.findAll();	
 	}
 	
 	public Professor mostrarUmProfessor(Integer id_professor) {
 		Optional<Professor> professor = professorRepository.findById(id_professor);
-		return professor.orElseThrow();		
+		return professor.orElseThrow();
 	}
 	
-	public Professor InserirProfessorSemTurma(Professor professor) {
-		professor.setId_professor(null);
-		return professorRepository.save(professor);
+	public Professor buscarProfessorDaTurma(Integer id_turma){
+		Professor professor = professorRepository.fetchByTurma(id_turma);
+		return professor;
 	}
 	
-	public Professor InserirProfessorComTurma(Integer id_turma, Professor professor) {
-		professor.setId_professor(null);
-		Turma turma = turmaService.buscarUmaTurma(id_turma);
-		professor.setTurma(turma);
-		return professorRepository.save(professor);
+	public Professor buscarProfessorPeloNome(String pro_nome){
+		Professor professor = professorRepository.fetchByName(pro_nome);
+		return professor;
 	}
 	
-	public Professor editarProfessor(Integer id_turma, Professor professor) {
-		
-		if(id_turma != null) {
-			Professor dadosProfAntesDaMudanca = mostrarUmProfessor(professor.getId_professor());
-			Turma turmaAnterior = dadosProfAntesDaMudanca.getTurma();
-			
-			if(turmaAnterior != null) {
-				turmaAnterior.setProfessor(null);
-				turmaRepository.save(turmaAnterior);				
-			}		
-			
-			Turma turma = turmaService.buscarUmaTurma(id_turma);
-			professor.setTurma(turma);
-			turma.setProfessor(professor);			
-		}		
-		return professorRepository.save(professor);
+	public List<Professor> professorSemTurma(){
+		return professorRepository.professorSemTurma();
+	}
+	
+	public List<List> ProfesssorComSuaTurma(){
+		return professorRepository.professorComSuaTurma();
 	}
 	
 	public Professor InserirProfessor(Integer id_turma, Professor professor) {
@@ -66,19 +47,22 @@ public class ProfessorService {
 		
 		if(id_turma != null) {
 			Turma turma = turmaService.buscarUmaTurma(id_turma);
-			professor.setTurma(turma);		
-			turma.setProfessor(professor);
+			professor.setTurma(turma);
+			
 		}
-		return professorRepository.save(professor);		
+		return professorRepository.save(professor);
+		
 	}
 	
-	public Professor buscarProfessorDaTurma(Integer id_turma) {
-		Professor professor = professorRepository.buscaProfessorDaTurma(id_turma);
-		return professor;
+	public Professor editarProfessor(Professor professor) {
+		mostrarUmProfessor(professor.getId_professor());
+		return professorRepository.save(professor);
 	}
 	
-	public List<Professor> professorSemTurma(){
-		return professorRepository.professorSemTurma();
+	public Professor salvarFoto(Integer id_professor, String caminhoFoto) {
+		Professor professor = mostrarUmProfessor(id_professor);
+		professor.setPro_foto(caminhoFoto);
+		return professorRepository.save(professor);
 	}
 	
 }

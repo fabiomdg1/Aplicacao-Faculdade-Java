@@ -48,7 +48,7 @@ public class AlunoController {
 	//----- Disponibilizando o método mostrarTodosAlunos através do endereço faculdade/alunos por meio da notação @GetMapping -----//
 	//----- A diferença para o RequestMapping é que o @GetMapping especifica os tipos de solicitações HTTP. Neste caso o GET ------//
 	@GetMapping("/aluno")
-	public List<Aluno> mostrarTodosAlunos() {
+	public List<Aluno> mostrarTodosAlunos(){
 		List<Aluno> aluno = alunoService.mostrarTodosAlunos();
 		return aluno;
 	}
@@ -65,35 +65,37 @@ public class AlunoController {
 	//----- Disponibilizando o método buscarUmAluno através do endereço faculdade/ra_aluno por meio da notação @GetMapping --------//
 	//----- A diferença para o RequestMapping é que o @GetMapping especifica os tipos de solicitações HTTP. Neste caso o GET ------//
 	@GetMapping("/aluno/{ra_aluno}")
-	public ResponseEntity<Aluno> buscarUmAluno(@PathVariable Integer ra_aluno) {
-		Aluno aluno = alunoService.buscarUmAluno(ra_aluno);
+	public ResponseEntity<?> buscarUmAluno(@PathVariable Integer ra_aluno){
+		Aluno aluno  = alunoService.buscarUmAluno(ra_aluno);
 		return ResponseEntity.ok().body(aluno);
+		
 	}
 	
 	//----------------------------------------------------- GET --------------------------------------------------------------------------------//
 		//----- Disponibilizando o método buscarAlunoTurma através do endereço faculdade/aluno/busca-turma, aluno por meio da notação @GetMapping -----//
 		//----- A diferença para o RequestMapping é que o @GetMapping especifica os tipos de solicitações HTTP. Neste caso o GET -------------------//
-		@GetMapping("/aluno/busca-turma/{id_turma}")
-		public List<Aluno> buscarAlunoTurma(@PathVariable Integer id_turma){
-			List<Aluno> aluno = alunoService.buscarAlunoTurma(id_turma);
-			return aluno;
-		}
+	@GetMapping("/aluno/busca-turma/{id_turma}")
+	public List<Aluno> buscarAlunoTurma(@PathVariable Integer id_turma){
+		List<Aluno> aluno = alunoService.buscarAlunoTurma(id_turma);
+		return aluno;
+	}
 	
 	//--------------------------------------------------- POST --------------------------------------------------------------------//
 	//----- Disponibilizando o método inserirAluno através do endereço faculdade/aluno por meio da notação @PostMapping -----------//
 	//----- A diferença para o RequestMapping é que o @PostMapping especifica os tipos de solicitações HTTP. Neste caso o POST ----//
 	@PostMapping("/aluno")
-	public ResponseEntity<Aluno> InserirAluno(@RequestParam(value="turma")Integer id_turma,	@RequestBody Aluno aluno){	
-		aluno = alunoService.InserirAluno(id_turma, aluno);
-		
-		
-
-	//--------------------------------------------------- URI --------------------------------------------------------------------//
+	public ResponseEntity<Aluno> InserirAluno(@RequestBody Aluno aluno){
+	aluno = alunoService.InserirAluno(aluno);//--------------------------------------------------- URI --------------------------------------------------------------------//
 	//-------------------- Basicamente o URI é composto pelo complemento da URL padrão do site -----------------------------------//
 	//------------------------------ Passando parâmetros específicos para a aplicação --------------------------------------------//
-		URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/aluno/{id}").buildAndExpand(aluno.getRa_aluno()).toUri();
-		return ResponseEntity.created(uri).build();		
+	URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+			.buildAndExpand(aluno.getRa_aluno()).toUri();
+	return ResponseEntity.created(uri).build();		
 	}
+	
+	
+	
+	
 	
 	
 	//--------------------------------------------------- DELETE --------------------------------------------------------------------------//
@@ -110,25 +112,26 @@ public class AlunoController {
 	//----- Disponibilizando o método editarAluno através do endereço faculdade/aluno/ra_aluno, aluno por meio da notação @PutMapping -----//
 	//----- A diferença para o RequestMapping é que o @PutMapping especifica os tipos de solicitações HTTP. Neste caso o PUT --------------//
 	@PutMapping("aluno/{ra_aluno}")	//
-	public ResponseEntity<Void> editarAluno(@RequestParam(value="turma")Turma turma, @PathVariable Integer ra_aluno, @RequestBody Aluno aluno){		
+	public ResponseEntity<Void> editarAluno(@PathVariable Integer ra_aluno, @RequestBody Aluno aluno){
 		aluno.setRa_aluno(ra_aluno);
-		aluno.setTurma(turma);
 		aluno = alunoService.editarAluno(aluno);
 		return ResponseEntity.noContent().build();
 	}
 	
 	
-	
-	//@PutMapping("/aluno/{ra_aluno}")
-	//public ResponseEntity<Void> editarAluno(@PathVariable Integer ra_aluno, @RequestBody Aluno aluno){
-	//	aluno.setRa_aluno(ra_aluno);
-	//	aluno = alunoService.editarAluno(aluno);
-	//	return ResponseEntity.noContent().build();
-	//}
-	
+	//----------//
+	@PutMapping("/aluno/inserirTurma/{ra_aluno}")
+	public ResponseEntity<Aluno> inserirAlunoNaTurma(@PathVariable Integer ra_aluno, @RequestBody Turma turma){
+		Aluno aluno = alunoService.inserirAlunoNaTurma(ra_aluno, turma);
+		return ResponseEntity.noContent().build();
+	}
 	
 	
-	
+	@PutMapping("/aluno/deixarSemTurma/{ra_aluno}")
+	public ResponseEntity<Aluno> deixarAlunoSemTurma(@PathVariable Integer ra_aluno){
+		Aluno aluno = alunoService.deixarAlunoSemTurma(ra_aluno);
+		return ResponseEntity.noContent().build();
+	}
 	
 	
 }

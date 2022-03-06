@@ -15,27 +15,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import soulCode.faculdade.models.Professor;
+import soulCode.faculdade.models.Turma;
 import soulCode.faculdade.services.ProfessorService;
 import soulCode.faculdade.services.TurmaService;
 
+
 @CrossOrigin
 @RestController
-@RequestMapping("faculdade")
+@RequestMapping("escola")
 public class ProfessorController {
+	
 	@Autowired
 	private ProfessorService professorService;
 	
-	@Autowired
-	private TurmaService turmaService;
-
-	
 	@GetMapping("/professor")
 	public List<Professor> mostrarTodosProfessores(){
-		//List<Professor> professor = professorService.mostrarTodosProfessores();
-		//return professor;
-		return professorService.mostrarTodosProfessores();
+		List<Professor> professor = professorService.mostrarTodosProfessores();
+		return  professor;
 	}
 	
 	@GetMapping("/professor/{id_professor}")
@@ -45,71 +42,45 @@ public class ProfessorController {
 	}
 	
 	@GetMapping("/professor-turma/{id_turma}")
-	public ResponseEntity<Professor>buscarProfessorDaTurma(@PathVariable Integer id_turma){
+	public ResponseEntity<Professor> buscarProfessorDaTurma(@PathVariable Integer id_turma){
 		Professor professor = professorService.buscarProfessorDaTurma(id_turma);
 		return ResponseEntity.ok().body(professor);
 	}
 	
-	@PostMapping("/professorSemTurma")
-	public ResponseEntity<Professor> InserirProfessorSemTurma(@RequestBody Professor professor){
-		professor = professorService.InserirProfessorSemTurma(professor);
-		
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(professor.getId_professor()).toUri();
-		return ResponseEntity.created(uri).build();
-		
+	@GetMapping("/professor-nome/{pro_nome}")
+	public ResponseEntity<Professor> buscarProfessorPeloNome(@PathVariable String pro_nome){
+		Professor professor = professorService.buscarProfessorPeloNome(pro_nome);
+		return ResponseEntity.ok().body(professor);
 	}
-	
-	
-	@PostMapping("/professor")
-	public ResponseEntity<Professor> inserirProfessor(@RequestParam(value="turma", required=false)
-	Integer id_turma, @RequestBody Professor professor){
-		professor = professorService.InserirProfessorComTurma(id_turma, professor);
-		
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(professor.getId_professor()).toUri();
-		return ResponseEntity.created(uri).build();
-	}
-	
-	
-	
-	@PostMapping("/professorComTurma")
-	public ResponseEntity<Professor> InserirProfessorComTurma(@RequestParam(value="turma")Integer id_turma, @RequestBody Professor professor){
-		professor = professorService.InserirProfessorComTurma(id_turma, professor);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(professor.getId_professor()).toUri();
-		return ResponseEntity.created(uri).build();		
-	}
-	
-	
-	@PutMapping("/professor/{id_professor}")
-	public ResponseEntity<Professor> editarProfessor(@RequestParam(value="turma", required=false)Integer id_turma, @PathVariable Integer id_professor, @RequestBody Professor professor){
-		professor.setId_professor(id_professor);
-		
-		
-		professor = professorService.editarProfessor(id_turma, professor);
-		return ResponseEntity.noContent().build();		
-	}
-	
 	@GetMapping("/professorSemTurma")
 	public List<Professor> professorSemTurma(){
-		List<Professor> professor = professorService.professorSemTurma() ;
+		List<Professor> professor= professorService.professorSemTurma();
 		return professor;
 	}
 	
+	@GetMapping("/professor/professor-turma")
+	public List<List> alunosComTurma(){
+		List<List> professorTurma = professorService.ProfesssorComSuaTurma();
+		return professorTurma;
+	}
+	@PostMapping("/professor")
+	public ResponseEntity<Professor> InserirProfessorComTurma(@RequestParam(value="turma", required = false)Integer id_turma,@RequestBody Professor professor){
+		professor = professorService.InserirProfessor(id_turma, professor);
+		
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(professor.getId_professor()).toUri();
+		return ResponseEntity.created(uri).build();
+	}
+	
+	@PutMapping("/professor/{id_professor}")
+	public ResponseEntity<Professor> editarProfessor(@RequestParam(value="turma")Turma turma, @PathVariable Integer id_professor, @RequestBody Professor professor){
+		professor.setId_professor(id_professor);
+		professor.setTurma(turma);
+		turma.setProfessor(professor);
+		professor = professorService.editarProfessor(professor);
+		
+		return ResponseEntity.noContent().build();
+	}
+
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

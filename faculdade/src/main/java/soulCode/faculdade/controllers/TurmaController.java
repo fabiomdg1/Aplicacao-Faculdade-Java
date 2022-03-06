@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import soulCode.faculdade.models.Turma;
@@ -46,7 +47,6 @@ public class TurmaController {
 		return turma;
 	}
 	
-	
 	//--------------------------------------------------- GET -----------------------------------------------------------------------------//
 	//----- Disponibilizando o método mostrarTodosAlunos através do endereço faculdade/turma/id_turma por meio da notação @GetMapping -----//
 	//----- A diferença para o RequestMapping é que o @GetMapping especifica os tipos de solicitações HTTP. Neste caso o GET --------------//
@@ -58,20 +58,40 @@ public class TurmaController {
 	}
 	
 	
+	
+	@GetMapping("/turmaSemProfessor")
+	public List<Turma> professorSemTurma(){
+		List<Turma> turma = turmaService.turmaSemProfessor();
+		return turma;
+	}
+	
+	@GetMapping("/turma/turma-professor/{id_professor}")
+	public Turma turmaDoProfessor(@PathVariable Integer id_professor){
+		return turmaService.turmaDoProfessor(id_professor);
+	}
+	
+	@GetMapping("/turma/turma-professor")
+	public List<List> turmasComProfessor(){
+		List<List> turmaProfessor = turmaService.turmaComSeuProfessor();
+		return turmaProfessor;
+	}
+	
+	
 	//--------------------------------------------------- POST --------------------------------------------------------------------------------//
 	//----- Disponibilizando o método create através do endereço faculdade/turma/ por meio da notação @GetMapping -------------------------//
 	//----- A diferença para o RequestMapping é que o @GetMapping especifica os tipos de solicitações HTTP. Neste caso o POST -------------//
 	//----- A notação @RequestBody é utilizado quando o valor da variável é passada diretamente na URL -----------------------------------//
 	@PostMapping("/turma")
-	public ResponseEntity<Turma> create(@RequestBody Turma turma){
-		turma = turmaService.create(turma);
+	public ResponseEntity<Turma> cadastrarTurma(@RequestParam(value="professor", required = false)Integer id_professor,@RequestBody Turma turma){
+		turma = turmaService.cadastrarTurma(id_professor,turma);
 		
 		//--------------------------------------------------- URI --------------------------------------------------------------------//
 		//-------------------- Basicamente o URI é composto pelo complemento da URL padrão do site -----------------------------------//
 		//------------------------------ Passando parâmetros específicos para a aplicação --------------------------------------------//
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-					.buildAndExpand(turma.getId_turma()).toUri();
-		return ResponseEntity.created(uri).build();				
+				.buildAndExpand(turma.getId_turma()).toUri();
+		
+		return ResponseEntity.created(uri).build();	
 	}
 	
 	//--------------------------------------------------- PUT ----------------------------------------------------------------------------//
@@ -90,16 +110,25 @@ public class TurmaController {
 	//----- A diferença para o RequestMapping é que o @GetMapping especifica os tipos de solicitações HTTP. Neste caso o PUT -------------//
 
 	@DeleteMapping("/turma/{id_turma}")
-	public ResponseEntity<Void> deletarUmaTurma(@PathVariable Integer id_turma){
+	public ResponseEntity<Turma> deletarUmaTurma(@PathVariable Integer id_turma){
 		turmaService.deletarUmaTurma(id_turma);
 		return ResponseEntity.noContent().build();
 	}
 	
 	@PutMapping("/turma/definirProfessor/{id_turma}/{id_professor}")
 	public ResponseEntity<Professor> atribuirProfessor(@PathVariable Integer id_turma, @PathVariable Integer id_professor){
-		Turma turma = turmaService.atribuirProfessor(id_turma, id_professor);
+		turmaService.atribuirProfessor(id_turma, id_professor);
 		return ResponseEntity.noContent().build();
 	}
+	
+	
+	@PutMapping("/turma/tirarProfessor/{id_turma}/{id_professor}")
+	public ResponseEntity<Professor> deixarTurmaSemProfessor(@PathVariable Integer id_turma, @PathVariable Integer id_professor){
+		turmaService.deixarTurmaSemProfessor(id_turma, id_professor);
+		return ResponseEntity.noContent().build();
+	}
+	
+	
 	
 }
 

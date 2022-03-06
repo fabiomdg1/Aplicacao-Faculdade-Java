@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Professor {
+
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -23,54 +24,60 @@ public class Professor {
 	@Column(nullable = true, length=40)
 	private String pro_formacao;
 	
-	@Column(nullable = true, length=20)
-	private String pro_idade;
-			
+	@Column(nullable = true)
+	private String pro_foto;
 	
-
 	@JsonIgnore
 	@OneToOne
-	@JoinColumn(name = "id_turma", unique = true)	
+	@JoinColumn(name = "id_turma", unique = true)
 	private Turma turma;
 
-	
-	//----- Getters and Setters -----//	
-	
-	public String getPro_idade() {
-		return pro_idade;
-	}
 
-	public void setPro_idade(String pro_idade) {
-		this.pro_idade = pro_idade;
-	}
-		
 	public Integer getId_professor() {
 		return id_professor;
 	}
+
 
 	public void setId_professor(Integer id_professor) {
 		this.id_professor = id_professor;
 	}
 
+
 	public String getPro_nome() {
 		return pro_nome;
 	}
+
 
 	public void setPro_nome(String pro_nome) {
 		this.pro_nome = pro_nome;
 	}
 
+
 	public String getPro_formacao() {
 		return pro_formacao;
 	}
+
 
 	public void setPro_formacao(String pro_formacao) {
 		this.pro_formacao = pro_formacao;
 	}
 
+
+	public String getPro_foto() {
+		return pro_foto;
+	}
+
+
+	public void setPro_foto(String pro_foto) {
+		this.pro_foto = pro_foto;
+	}
+
+	
+
 	public Turma getTurma() {
 		return turma;
 	}
+
 
 	public void setTurma(Turma turma) {
 		this.turma = turma;

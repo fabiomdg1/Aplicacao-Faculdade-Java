@@ -10,51 +10,36 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 //---------------------- A anotação @Entity é utilizada para informar que uma classe também é uma entidade. ------------//
 //---------------------- Uma entidade representa, na Orientação a Objetos, uma tabela do banco de dados-----------------//
 //----------------------------Neste caso será criado no banco de dados uma tabela chamada Turma ------------------------//
 @Entity
 public class Turma {
-	
-	
-	//----------------------------------------------------ID da Turma---------------------------------------------------------------------//
-	//------- A notação @Id é utilizada para informar ao JPA qual campo/atributo de uma entidade estará relacionado à chave primária -----//
-	//------- A notação @GeneratedValue responsabiliza o provedor de persistencia para que o id_turma seja único -------------------------// 
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id_turma;
 	
-	//---------------------------------------------Coluna tu_nome-------------------------------------------------------------//
-	//----- A anotação @Column é usada para realizar o mapeamento do campo da entidade com uma coluna do banco de dados. -----// 
-	@Column(nullable = false, length=60)
+	@Column(nullable=false, length=30)
 	private String tu_nome;
 	
-	//---------------------------------------------Coluna tu_descrição--------------------------------------------------------//
-	//----- A anotação @Column é usada para realizar o mapeamento do campo da entidade com uma coluna do banco de dados. -----//
-	@Column(nullable = false, length=60)
+	@Column(nullable=false, length=100)
 	private String tu_descricao;
 	
-	//----------------------------------- Uma turma pode ter um Array de Alunos -------------------------------------------//
-	//---------------------------------------- Relacionamento OneToMany----------------------------------------------------//
-	//----- A notação @OneToMany significa que uma entidade está relacionado com vários registros de outras entidades -----//
+	@JsonIgnore
 	@OneToMany(mappedBy = "turma")
 	private List<Aluno> aluno = new ArrayList<>();
-
+	
+	@JsonIgnore
 	@OneToOne
-	@JoinColumn(name = "id_professor", unique = true)	
+	@JoinColumn(name = "id_professor", unique = true)
 	private Professor professor;
-	//private Turma turma;
-	
-	
-	 //----- Getters and Setters -----//
-	
+
 	public Integer getId_turma() {
 		return id_turma;
 	}
-
-	
-
-	
 
 	public void setId_turma(Integer id_turma) {
 		this.id_turma = id_turma;
@@ -83,6 +68,8 @@ public class Turma {
 	public void setAluno(List<Aluno> aluno) {
 		this.aluno = aluno;
 	}
+	
+	
 
 	public Professor getProfessor() {
 		return professor;
@@ -90,6 +77,5 @@ public class Turma {
 
 	public void setProfessor(Professor professor) {
 		this.professor = professor;
-	}		
-	
+	}
 }
